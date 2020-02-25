@@ -219,8 +219,19 @@ function processContains(item, list, callback) {
  * [2] Invoking `processDuplicateFree` passing `[1,1,2,2,3]` and `(arr) => arr.length`,
  * should return 3.
 */
-function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */) {
-  /* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */
+function processDuplicateFree(list) {
+  if(list.length < 2)return list;
+  
+  let sorted = list.sort();
+  let ret = [sorted[0]];
+  
+  for (let i = 1; i < sorted.length; i++) {
+    
+    if(list[i] === list[i-1]){continue;}
+    
+    ret.push(list[i]);    
+  }
+  return ret;
 }
 
 /////////////// HIGHER-ORDER ARRAY METHODS ///////////////
@@ -277,11 +288,11 @@ firstNamesAllCaps(runners)
  * The runners in the array appear in the same order they appear in the `runners` array.
 */
 function getRunnersByTShirtSize(runners, tShirtSize) {
- runners.filter(
+ return runners.filter(
    (x)=> x.shirt_size === tShirtSize
  )
 }
-console.log(getRunnersByTShirtSize(runners, 'L'))
+//console.log(getRunnersByTShirtSize(runners, 'L'))
 /**
  * ### Challenge `tallyUpDonations`
  * 
@@ -292,8 +303,10 @@ console.log(getRunnersByTShirtSize(runners, 'L'))
  * @param runners array of runners like the one inside the /data/runners.js file.
  * @returns a number which is the sum of the donations by all runners.
 */
-function tallyUpDonations(/* CODE HERE */) {
-  /* CODE HERE */
+function tallyUpDonations(runners) {
+  return runners.map(x => x.donation).reduce(
+    (accum, cur) => accum + cur, 0
+  )
 }
 
 /////////////// CLOSURES ///////////////
@@ -314,9 +327,10 @@ function tallyUpDonations(/* CODE HERE */) {
 */
 function counterMaker() {
   // BROKEN CODE STARTS
-  const count = 0;
-  function counter() {
-    ++count
+  let count = 0;
+  return function counter() {
+    //console.log(count);
+    return count++;
   }
   // BROKEN CODE ENDS
 }
@@ -342,7 +356,12 @@ function counterMaker() {
  * etc
 */
 function counterMakerWithLimit(/* CODE HERE */) {
-  /* CODE HERE */
+  let count = 0;
+  return function counter() {
+    count %= 4;
+    //console.log(count);
+    return count++;
+  }
 }
 
 /////////////// END OF CHALLENGE ///////////////
